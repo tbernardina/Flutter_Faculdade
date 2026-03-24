@@ -1,6 +1,6 @@
 name: roteiro_estelar
 version: 1.0.0+1
-description: App Flutter de exemplo com múltiplas páginas e tema espacial.
+description: App Flutter educativo para ensinar mapa astral em modo parcial ou completo.
 publish_to: 'none'
 
 environment:

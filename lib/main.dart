@@ -1,42 +1,48 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const RoteiroEstelarApp());
+  runApp(const MapaAstralApp());
 }
 
-class RoteiroEstelarApp extends StatelessWidget {
-  const RoteiroEstelarApp({super.key});
+class MapaAstralApp extends StatelessWidget {
+  const MapaAstralApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Roteiro Estelar',
+      title: 'Guia do Mapa Astral',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF6750A4),
+          seedColor: const Color(0xFF5B21B6),
           brightness: Brightness.dark,
         ),
-        scaffoldBackgroundColor: const Color(0xFF101828),
+        scaffoldBackgroundColor: const Color(0xFF0F172A),
       ),
       home: const HomeShell(),
     );
   }
 }
 
-class Destino {
-  const Destino({
-    required this.nome,
-    required this.descricao,
-    required this.distancia,
-    required this.preco,
-  });
+class Signo {
+  const Signo({required this.nome, required this.elemento, required this.resumo});
 
   final String nome;
-  final String descricao;
-  final String distancia;
-  final double preco;
+  final String elemento;
+  final String resumo;
+}
+
+class CasaAstral {
+  const CasaAstral({
+    required this.numero,
+    required this.tema,
+    required this.explicacao,
+  });
+
+  final int numero;
+  final String tema;
+  final String explicacao;
 }
 
 class HomeShell extends StatefulWidget {
@@ -48,139 +54,145 @@ class HomeShell extends StatefulWidget {
 
 class _HomeShellState extends State<HomeShell> {
   int _paginaAtual = 0;
+  bool _modoCompleto = false;
 
-  final List<Destino> _destinos = const [
-    Destino(
-      nome: 'Lua Tranquillitatis',
-      descricao: 'Passeio curto para ver o nascer da Terra no horizonte lunar.',
-      distancia: '384.400 km',
-      preco: 29999,
-    ),
-    Destino(
-      nome: 'Anéis de Saturno',
-      descricao: 'Cruzeiro panorâmico com observação das partículas de gelo.',
-      distancia: '1,2 bilhão km',
-      preco: 189999,
-    ),
-    Destino(
-      nome: 'Base Aurora em Marte',
-      descricao: 'Expedição de 7 dias para dunas, crateras e laboratório científico.',
-      distancia: '225 milhões km',
-      preco: 99999,
-    ),
+  final List<Signo> _signos = const [
+    Signo(nome: 'Áries', elemento: 'Fogo', resumo: 'Iniciativa, coragem e impulso para agir.'),
+    Signo(nome: 'Touro', elemento: 'Terra', resumo: 'Estabilidade, paciência e foco no concreto.'),
+    Signo(nome: 'Gêmeos', elemento: 'Ar', resumo: 'Comunicação, curiosidade e adaptabilidade.'),
+    Signo(nome: 'Câncer', elemento: 'Água', resumo: 'Sensibilidade, cuidado e memória afetiva.'),
+    Signo(nome: 'Leão', elemento: 'Fogo', resumo: 'Expressão, criatividade e presença pessoal.'),
+    Signo(nome: 'Virgem', elemento: 'Terra', resumo: 'Organização, análise e busca de aprimoramento.'),
+    Signo(nome: 'Libra', elemento: 'Ar', resumo: 'Diplomacia, parceria e senso estético.'),
+    Signo(nome: 'Escorpião', elemento: 'Água', resumo: 'Intensidade, profundidade e transformação.'),
+    Signo(nome: 'Sagitário', elemento: 'Fogo', resumo: 'Expansão, aprendizado e visão de futuro.'),
+    Signo(nome: 'Capricórnio', elemento: 'Terra', resumo: 'Disciplina, estratégia e responsabilidade.'),
+    Signo(nome: 'Aquário', elemento: 'Ar', resumo: 'Originalidade, coletivo e inovação.'),
+    Signo(nome: 'Peixes', elemento: 'Água', resumo: 'Imaginação, empatia e espiritualidade.'),
   ];
 
-  final Set<String> _favoritos = <String>{};
+  final List<CasaAstral> _casas = const [
+    CasaAstral(numero: 1, tema: 'Identidade', explicacao: 'Como você inicia ciclos e se apresenta ao mundo.'),
+    CasaAstral(numero: 2, tema: 'Valores', explicacao: 'Relação com dinheiro, autoestima e recursos pessoais.'),
+    CasaAstral(numero: 3, tema: 'Comunicação', explicacao: 'Aprendizado, linguagem e trocas do cotidiano.'),
+    CasaAstral(numero: 4, tema: 'Raízes', explicacao: 'Família, origem e base emocional.'),
+    CasaAstral(numero: 5, tema: 'Criatividade', explicacao: 'Prazer, romances e expressão criativa.'),
+    CasaAstral(numero: 6, tema: 'Rotina', explicacao: 'Trabalho diário, saúde e organização da vida.'),
+    CasaAstral(numero: 7, tema: 'Relacionamentos', explicacao: 'Parcerias, contratos e vínculos importantes.'),
+    CasaAstral(numero: 8, tema: 'Transformação', explicacao: 'Crises, desapego e recursos compartilhados.'),
+    CasaAstral(numero: 9, tema: 'Expansão', explicacao: 'Filosofia de vida, viagens e estudos superiores.'),
+    CasaAstral(numero: 10, tema: 'Carreira', explicacao: 'Imagem pública, ambição e realização profissional.'),
+    CasaAstral(numero: 11, tema: 'Coletivo', explicacao: 'Amizades, grupos e visão de futuro em comunidade.'),
+    CasaAstral(numero: 12, tema: 'Inconsciente', explicacao: 'Mundo interno, espiritualidade e encerramentos.'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     final paginas = <Widget>[
-      InicioPage(destinos: _destinos),
-      DestinosPage(
-        destinos: _destinos,
-        favoritos: _favoritos,
-        onFavoritar: _alternarFavorito,
+      IntroducaoPage(
+        modoCompleto: _modoCompleto,
+        onModoChanged: (valor) => setState(() => _modoCompleto = valor),
       ),
-      FavoritosPage(
-        destinos: _destinos,
-        favoritos: _favoritos,
-      ),
-      const PerfilPage(),
+      SignosPage(signos: _signos),
+      CasasPage(casas: _casas, modoCompleto: _modoCompleto),
+      LeituraPage(modoCompleto: _modoCompleto),
     ];
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Roteiro Estelar'),
         centerTitle: true,
+        title: const Text('Guia do Mapa Astral'),
       ),
       body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 250),
+        duration: const Duration(milliseconds: 220),
         child: paginas[_paginaAtual],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _paginaAtual,
-        onDestinationSelected: (index) {
-          setState(() => _paginaAtual = index);
-        },
+        onDestinationSelected: (index) => setState(() => _paginaAtual = index),
         destinations: const [
           NavigationDestination(
-            icon: Icon(Icons.home_outlined),
-            selectedIcon: Icon(Icons.home),
-            label: 'Início',
+            icon: Icon(Icons.school_outlined),
+            selectedIcon: Icon(Icons.school),
+            label: 'Introdução',
           ),
           NavigationDestination(
-            icon: Icon(Icons.public_outlined),
-            selectedIcon: Icon(Icons.public),
-            label: 'Destinos',
+            icon: Icon(Icons.auto_awesome_outlined),
+            selectedIcon: Icon(Icons.auto_awesome),
+            label: 'Signos',
           ),
           NavigationDestination(
-            icon: Icon(Icons.favorite_border),
-            selectedIcon: Icon(Icons.favorite),
-            label: 'Favoritos',
+            icon: Icon(Icons.grid_view_outlined),
+            selectedIcon: Icon(Icons.grid_view_rounded),
+            label: 'Casas',
           ),
           NavigationDestination(
-            icon: Icon(Icons.person_outline),
-            selectedIcon: Icon(Icons.person),
-            label: 'Perfil',
+            icon: Icon(Icons.menu_book_outlined),
+            selectedIcon: Icon(Icons.menu_book),
+            label: 'Leitura',
           ),
         ],
       ),
     );
   }
-
-  void _alternarFavorito(String nomeDestino) {
-    setState(() {
-      if (_favoritos.contains(nomeDestino)) {
-        _favoritos.remove(nomeDestino);
-      } else {
-        _favoritos.add(nomeDestino);
-      }
-    });
-  }
 }
 
-class InicioPage extends StatelessWidget {
-  const InicioPage({super.key, required this.destinos});
+class IntroducaoPage extends StatelessWidget {
+  const IntroducaoPage({
+    super.key,
+    required this.modoCompleto,
+    required this.onModoChanged,
+  });
 
-  final List<Destino> destinos;
+  final bool modoCompleto;
+  final ValueChanged<bool> onModoChanged;
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      key: const ValueKey<String>('inicio_page'),
+      key: const ValueKey<String>('introducao_page'),
       padding: const EdgeInsets.all(16),
       children: [
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [Color(0xFF4338CA), Color(0xFF7C3AED)],
-            ),
             borderRadius: BorderRadius.circular(16),
+            gradient: const LinearGradient(
+              colors: [Color(0xFF312E81), Color(0xFF7C3AED)],
+            ),
           ),
           child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Planeje sua próxima viagem espacial',
+                'Aprenda seu Mapa Astral',
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 8),
               Text(
-                'Selecione destinos, salve favoritos e acompanhe seu perfil de viajante.',
+                'Veja os pilares da astrologia natal: signos, casas e uma leitura guiada.',
               ),
             ],
           ),
         ),
-        const SizedBox(height: 16),
-        Text('Destinos disponíveis: ${destinos.length}'),
-        const SizedBox(height: 12),
-        ...destinos.take(2).map(
-          (destino) => Card(
-            child: ListTile(
-              title: Text(destino.nome),
-              subtitle: Text(destino.descricao),
-              trailing: Text('R\$ ${destino.preco.toStringAsFixed(0)}'),
+        const SizedBox(height: 20),
+        SwitchListTile(
+          title: const Text('Modo completo de estudo'),
+          subtitle: Text(
+            modoCompleto
+                ? 'Exibindo conteúdo detalhado (Sol, Lua, Ascendente e planetas).'
+                : 'Exibindo conteúdo parcial (fundamentos essenciais).',
+          ),
+          value: modoCompleto,
+          onChanged: onModoChanged,
+        ),
+        const SizedBox(height: 8),
+        const Card(
+          child: ListTile(
+            leading: Icon(Icons.info_outline),
+            title: Text('O que é mapa astral?'),
+            subtitle: Text(
+              'É uma representação simbólica do céu no momento do nascimento, usada para autoconhecimento.',
             ),
           ),
         ),
@@ -189,40 +201,25 @@ class InicioPage extends StatelessWidget {
   }
 }
 
-class DestinosPage extends StatelessWidget {
-  const DestinosPage({
-    super.key,
-    required this.destinos,
-    required this.favoritos,
-    required this.onFavoritar,
-  });
+class SignosPage extends StatelessWidget {
+  const SignosPage({super.key, required this.signos});
 
-  final List<Destino> destinos;
-  final Set<String> favoritos;
-  final ValueChanged<String> onFavoritar;
+  final List<Signo> signos;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      key: const ValueKey<String>('destinos_page'),
-      itemCount: destinos.length,
+      key: const ValueKey<String>('signos_page'),
+      itemCount: signos.length,
       itemBuilder: (context, index) {
-        final destino = destinos[index];
-        final isFavorito = favoritos.contains(destino.nome);
-
+        final signo = signos[index];
         return Card(
           margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: ListTile(
-            title: Text(destino.nome),
-            subtitle: Text(
-              '${destino.descricao}\nDistância: ${destino.distancia}',
-            ),
+            title: Text(signo.nome),
+            subtitle: Text('${signo.resumo}\nElemento: ${signo.elemento}'),
             isThreeLine: true,
-            trailing: IconButton(
-              tooltip: isFavorito ? 'Remover favorito' : 'Salvar favorito',
-              onPressed: () => onFavoritar(destino.nome),
-              icon: Icon(isFavorito ? Icons.favorite : Icons.favorite_border),
-            ),
+            leading: const Icon(Icons.stars_rounded),
           ),
         );
       },
@@ -230,84 +227,80 @@ class DestinosPage extends StatelessWidget {
   }
 }
 
-class FavoritosPage extends StatelessWidget {
-  const FavoritosPage({
+class CasasPage extends StatelessWidget {
+  const CasasPage({
     super.key,
-    required this.destinos,
-    required this.favoritos,
+    required this.casas,
+    required this.modoCompleto,
   });
 
-  final List<Destino> destinos;
-  final Set<String> favoritos;
+  final List<CasaAstral> casas;
+  final bool modoCompleto;
 
   @override
   Widget build(BuildContext context) {
-    final destinosFavoritos = destinos
-        .where((destino) => favoritos.contains(destino.nome))
-        .toList();
-
-    if (destinosFavoritos.isEmpty) {
-      return const Center(
-        key: ValueKey<String>('favoritos_vazio'),
-        child: Text('Você ainda não favoritou nenhum destino.'),
-      );
-    }
+    final casasExibidas = modoCompleto ? casas : casas.take(6).toList();
 
     return ListView(
-      key: const ValueKey<String>('favoritos_page'),
+      key: const ValueKey<String>('casas_page'),
       padding: const EdgeInsets.all(16),
-      children: destinosFavoritos
-          .map(
-            (destino) => Card(
-              child: ListTile(
-                leading: const Icon(Icons.favorite),
-                title: Text(destino.nome),
-                subtitle: Text('Pacote a partir de R\$ ${destino.preco.toStringAsFixed(0)}'),
-              ),
+      children: [
+        Text(
+          modoCompleto
+              ? 'Modo completo: 12 casas astrais'
+              : 'Modo parcial: foco nas 6 primeiras casas',
+        ),
+        const SizedBox(height: 12),
+        ...casasExibidas.map(
+          (casa) => Card(
+            child: ListTile(
+              title: Text('Casa ${casa.numero} • ${casa.tema}'),
+              subtitle: Text(casa.explicacao),
             ),
-          )
-          .toList(),
+          ),
+        ),
+      ],
     );
   }
 }
 
-class PerfilPage extends StatelessWidget {
-  const PerfilPage({super.key});
+class LeituraPage extends StatelessWidget {
+  const LeituraPage({super.key, required this.modoCompleto});
+
+  final bool modoCompleto;
 
   @override
   Widget build(BuildContext context) {
+    final blocosBasicos = const [
+      'Sol: representa identidade central e propósito.',
+      'Lua: descreve emoções e necessidades afetivas.',
+      'Ascendente: mostra estilo de ação e primeira impressão.',
+    ];
+
+    final blocosExtras = const [
+      'Mercúrio: comunicação e pensamento.',
+      'Vênus: afetos, vínculos e valores relacionais.',
+      'Marte: energia, impulso e forma de agir.',
+      'Júpiter e Saturno: expansão e responsabilidade.',
+    ];
+
+    final blocos = modoCompleto ? [...blocosBasicos, ...blocosExtras] : blocosBasicos;
+
     return ListView(
-      key: const ValueKey<String>('perfil_page'),
+      key: const ValueKey<String>('leitura_page'),
       padding: const EdgeInsets.all(16),
-      children: const [
-        CircleAvatar(
-          radius: 36,
-          child: Icon(Icons.person, size: 40),
+      children: [
+        const Text(
+          'Roteiro de leitura',
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 16),
-        Center(
-          child: Text(
-            'Comandante Aurora',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-          ),
-        ),
-        SizedBox(height: 8),
-        Center(
-          child: Text('Nível de explorador: Interplanetário'),
-        ),
-        SizedBox(height: 24),
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.rocket_launch_outlined),
-            title: Text('Viagens concluídas'),
-            trailing: Text('12'),
-          ),
-        ),
-        Card(
-          child: ListTile(
-            leading: Icon(Icons.star_outline),
-            title: Text('Pontuação galáctica'),
-            trailing: Text('8.940'),
+        const SizedBox(height: 12),
+        ...blocos.map(
+          (texto) => Card(
+            child: ListTile(
+              leading: const Icon(Icons.brightness_1_outlined),
+              title: Text(texto),
+            ),
           ),
         ),
       ],

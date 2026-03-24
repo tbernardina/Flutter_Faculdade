@@ -1,81 +1,61 @@
-# Roteiro Estelar (Flutter)
+# Guia do Mapa Astral (Flutter)
 
-Aplicativo Flutter com tema espacial para praticar navegação entre páginas, estado local e organização de interface.
+Aplicativo Flutter educativo para ensinar **mapa astral** de forma **parcial ou completa**.
 
-## Tema
+## Objetivo do app
 
-O tema escolhido foi **turismo espacial**. O usuário consegue visualizar destinos, marcar favoritos e acompanhar um perfil de viajante.
+Este projeto foi feito para explicar os fundamentos da astrologia natal de forma didática:
+
+- Signos e elementos.
+- Casas astrais.
+- Leitura básica (Sol, Lua e Ascendente).
+- Leitura completa com planetas pessoais e sociais.
 
 ## Como executar
 
-1. Instale o Flutter SDK (canal estável) e verifique com:
-   ```bash
-   flutter --version
-   ```
-2. Na raiz do projeto, execute:
-   ```bash
-   flutter pub get
-   flutter run
-   ```
-
-## Estrutura principal
-
-- `lib/main.dart`: contém toda a estrutura do app (modelo de dados, shell com navegação inferior e páginas).
-- `test/widget_test.dart`: teste básico de renderização.
-
-## Explicação de como cada página funciona
-
-### 1) Página **Início**
-- Classe: `InicioPage`.
-- Mostra um card de destaque com mensagem de boas-vindas.
-- Exibe um resumo com a quantidade de destinos disponíveis.
-- Mostra dois destinos em formato de lista (preview), incluindo nome, descrição e preço.
-
-### 2) Página **Destinos**
-- Classe: `DestinosPage`.
-- Renderiza todos os destinos via `ListView.builder`.
-- Cada item possui botão de coração para adicionar/remover favorito.
-- O estado de favoritos é controlado no `HomeShell` pelo método `_alternarFavorito`.
-
-### 3) Página **Favoritos**
-- Classe: `FavoritosPage`.
-- Filtra a lista total de destinos para exibir apenas os que estão salvos no conjunto `_favoritos`.
-- Se o usuário ainda não favoritou nada, aparece uma mensagem de estado vazio.
-
-### 4) Página **Perfil**
-- Classe: `PerfilPage`.
-- Mostra avatar, nome de viajante e dados estáticos (viagens concluídas e pontuação).
-- É uma página informativa para centralizar indicadores do usuário.
-
-## Como a navegação funciona
-
-- A navegação é feita por uma `NavigationBar` no `Scaffold` principal (`HomeShell`).
-- O índice selecionado (`_paginaAtual`) define qual widget será exibido no corpo (`body`).
-- O conteúdo da página é trocado com `AnimatedSwitcher` para uma transição suave.
-
-## Gerenciamento de estado
-
-- Foi usado **estado local** com `StatefulWidget` no `HomeShell`.
-- Lista de destinos: `_destinos` (imutável).
-- Favoritos: `_favoritos` (`Set<String>`) para evitar duplicidades.
-
-## Versionamento por branch
-
-Conforme solicitado, as versões do projeto ficam separadas por branch:
-
-- `versao-0-inicial`: estado inicial do repositório.
-- `versao-1-roteiro-estelar`: primeira versão completa do app Flutter com README.
-- `work`: branch atual para evolução contínua.
-
-Você pode alternar entre versões com:
+1. Instale o Flutter SDK.
+2. Na raiz do projeto, rode:
 
 ```bash
-git checkout versao-0-inicial
-git checkout versao-1-roteiro-estelar
+flutter pub get
+flutter run
 ```
 
-## Possíveis melhorias
+## Como cada página funciona
 
-- Separar cada página em arquivo próprio (`lib/pages`).
-- Persistir favoritos com `shared_preferences` ou banco local.
-- Adicionar tela de detalhes do destino com imagens.
+### 1) Introdução
+- Classe: `IntroducaoPage`.
+- Apresenta o que é mapa astral.
+- Possui um `Switch` para alternar entre:
+  - **Modo parcial**: conteúdo essencial.
+  - **Modo completo**: conteúdo mais aprofundado.
+- Esse estado fica no `HomeShell` (`_modoCompleto`) e afeta as outras páginas.
+
+### 2) Signos
+- Classe: `SignosPage`.
+- Lista os **12 signos** com resumo de características.
+- Também mostra o elemento de cada signo (Fogo, Terra, Ar, Água).
+
+### 3) Casas
+- Classe: `CasasPage`.
+- No modo parcial exibe as **6 primeiras casas**.
+- No modo completo exibe as **12 casas astrais**.
+- Cada card mostra número da casa, tema e explicação objetiva.
+
+### 4) Leitura
+- Classe: `LeituraPage`.
+- Monta um roteiro de interpretação do mapa:
+  - Sempre: Sol, Lua e Ascendente.
+  - No modo completo: inclui Mercúrio, Vênus, Marte, Júpiter e Saturno.
+
+## Navegação
+
+- O app usa `NavigationBar` com 4 abas: Introdução, Signos, Casas e Leitura.
+- A troca de telas ocorre no `HomeShell` pelo índice `_paginaAtual`.
+- Foi usado `AnimatedSwitcher` para transição suave entre as páginas.
+
+## Estrutura
+
+- `lib/main.dart`: app completo (tema, modelos, estado e páginas).
+- `test/widget_test.dart`: teste de renderização inicial.
+- `pubspec.yaml`: metadados e dependências do projeto.
