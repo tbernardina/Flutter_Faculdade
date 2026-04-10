@@ -1,51 +1,41 @@
 # Mapa Astral Interativo (Flutter)
 
-Aplicativo Flutter para estudo de mapa astral com múltiplos botões interativos, controle de estado e leitura personalizada.
+Aplicativo Flutter para estudo de mapa astral com interface simplificada.
 
-## Funcionalidades principais
+## Estrutura atual (simplificada)
 
-- Navegação por 4 abas: **Início**, **Signos**, **Casas** e **Leitura**.
-- Controle de estado central no `HomeShell`.
-- Modo **parcial** e **completo** de conteúdo.
-- Ações interativas com botões, chips, slider, dropdown, checkbox e quiz.
+O app foi reduzido para **4 botões interativos principais**:
 
-## Interações por página
+1. **Nova dica** (aba Início)
+2. **Sortear signo** (aba Signos)
+3. **Marcar todas as casas visíveis** (aba Casas)
+4. **Validar resposta** (aba Leitura)
+
+> O botão de **favorito da aba Signos** foi mantido em cada item da lista, conforme solicitado.
+
+## Abas
 
 ### Início
-- Botão **Concluir sessão** (incrementa sequência e progresso).
-- Botão **Resetar** (limpa progresso e marcações).
-- Botão **Mostrar/Ocultar resumo técnico**.
-- Botão **Nova dica** com conteúdo randômico.
-- `FilterChip` de interesses + `Slider` de progresso.
+- Switch para modo parcial/completo.
+- Chips de interesse.
+- Botão `Nova dica` para atualizar dica dinâmica.
 
 ### Signos
-- Botão **Sortear** para definir signo destaque.
-- `ChoiceChip` para filtrar por elemento.
-- Botão de coração por item para favoritar signo.
+- Filtro por elemento.
+- Botão `Sortear signo` para destaque do dia.
+- Botão de coração para favoritar cada signo.
 
 ### Casas
-- Botão **Marcar todas**.
-- Botão **Limpar seleção**.
-- `ExpansionTile` com `CheckboxListTile` para acompanhamento de estudo.
+- Botão único para marcar todas as casas visíveis.
+- Marcação individual por checkbox.
 
 ### Leitura
-- Dropdowns de **Signo solar**, **Signo lunar** e **Ascendente**.
-- Resumo textual automático com base nas seleções.
-- Quiz com `RadioListTile` + botões **Validar resposta** e **Resetar quiz**.
+- Dropdowns de Sol, Lua e Ascendente.
+- Quiz rápido com botão `Validar resposta`.
 
-## Manual para explicar o código
+## Controle de estado
 
-Além deste README, foi criado um guia dedicado:
-
-- **`MANUAL_EXPLICAR_CODIGO.md`**
-
-Esse documento traz um roteiro de apresentação, explicação de arquitetura, fluxo de estado e respostas prontas para perguntas comuns.
-
-
-## Solução para tela branca
-
-Se o app abrir com tela branca, rode `flutter clean` e depois `flutter pub get`.
-Nesta versão também foi corrigido um problema de tipagem no cálculo de progresso (`double`) que podia impedir a execução em alguns ambientes.
+O estado continua centralizado no `HomeShell` e é distribuído para as páginas via propriedades e callbacks.
 
 ## Como executar
 
@@ -60,8 +50,9 @@ flutter run
 flutter test
 ```
 
-## Arquivos principais
+## Arquivos
 
-- `lib/main.dart`: app completo.
-- `MANUAL_EXPLICAR_CODIGO.md`: guia para explicar o código.
-- `test/widget_test.dart`: teste básico do shell.
+- `lib/main.dart`
+- `README.md`
+- `MANUAL_EXPLICAR_CODIGO.md`
+- `test/widget_test.dart`
