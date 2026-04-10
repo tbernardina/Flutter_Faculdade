@@ -1,6 +1,6 @@
 name: roteiro_estelar
 version: 1.0.0+1
-description: App Flutter educativo para ensinar mapa astral em modo parcial ou completo.
+description: App Flutter interativo para estudar mapa astral com simulação de leitura personalizada.
 publish_to: 'none'
 
 environment:

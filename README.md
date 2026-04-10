@@ -1,61 +1,61 @@
-# Guia do Mapa Astral (Flutter)
+# Mapa Astral Interativo (Flutter)
 
-Aplicativo Flutter educativo para ensinar **mapa astral** de forma **parcial ou completa**.
+Aplicativo Flutter para estudo de mapa astral com múltiplos botões interativos, controle de estado e leitura personalizada.
 
-## Objetivo do app
+## Funcionalidades principais
 
-Este projeto foi feito para explicar os fundamentos da astrologia natal de forma didática:
+- Navegação por 4 abas: **Início**, **Signos**, **Casas** e **Leitura**.
+- Controle de estado central no `HomeShell`.
+- Modo **parcial** e **completo** de conteúdo.
+- Ações interativas com botões, chips, slider, dropdown, checkbox e quiz.
 
-- Signos e elementos.
-- Casas astrais.
-- Leitura básica (Sol, Lua e Ascendente).
-- Leitura completa com planetas pessoais e sociais.
+## Interações por página
+
+### Início
+- Botão **Concluir sessão** (incrementa sequência e progresso).
+- Botão **Resetar** (limpa progresso e marcações).
+- Botão **Mostrar/Ocultar resumo técnico**.
+- Botão **Nova dica** com conteúdo randômico.
+- `FilterChip` de interesses + `Slider` de progresso.
+
+### Signos
+- Botão **Sortear** para definir signo destaque.
+- `ChoiceChip` para filtrar por elemento.
+- Botão de coração por item para favoritar signo.
+
+### Casas
+- Botão **Marcar todas**.
+- Botão **Limpar seleção**.
+- `ExpansionTile` com `CheckboxListTile` para acompanhamento de estudo.
+
+### Leitura
+- Dropdowns de **Signo solar**, **Signo lunar** e **Ascendente**.
+- Resumo textual automático com base nas seleções.
+- Quiz com `RadioListTile` + botões **Validar resposta** e **Resetar quiz**.
+
+## Manual para explicar o código
+
+Além deste README, foi criado um guia dedicado:
+
+- **`MANUAL_EXPLICAR_CODIGO.md`**
+
+Esse documento traz um roteiro de apresentação, explicação de arquitetura, fluxo de estado e respostas prontas para perguntas comuns.
 
 ## Como executar
-
-1. Instale o Flutter SDK.
-2. Na raiz do projeto, rode:
 
 ```bash
 flutter pub get
 flutter run
 ```
 
-## Como cada página funciona
+## Como testar
 
-### 1) Introdução
-- Classe: `IntroducaoPage`.
-- Apresenta o que é mapa astral.
-- Possui um `Switch` para alternar entre:
-  - **Modo parcial**: conteúdo essencial.
-  - **Modo completo**: conteúdo mais aprofundado.
-- Esse estado fica no `HomeShell` (`_modoCompleto`) e afeta as outras páginas.
+```bash
+flutter test
+```
 
-### 2) Signos
-- Classe: `SignosPage`.
-- Lista os **12 signos** com resumo de características.
-- Também mostra o elemento de cada signo (Fogo, Terra, Ar, Água).
+## Arquivos principais
 
-### 3) Casas
-- Classe: `CasasPage`.
-- No modo parcial exibe as **6 primeiras casas**.
-- No modo completo exibe as **12 casas astrais**.
-- Cada card mostra número da casa, tema e explicação objetiva.
-
-### 4) Leitura
-- Classe: `LeituraPage`.
-- Monta um roteiro de interpretação do mapa:
-  - Sempre: Sol, Lua e Ascendente.
-  - No modo completo: inclui Mercúrio, Vênus, Marte, Júpiter e Saturno.
-
-## Navegação
-
-- O app usa `NavigationBar` com 4 abas: Introdução, Signos, Casas e Leitura.
-- A troca de telas ocorre no `HomeShell` pelo índice `_paginaAtual`.
-- Foi usado `AnimatedSwitcher` para transição suave entre as páginas.
-
-## Estrutura
-
-- `lib/main.dart`: app completo (tema, modelos, estado e páginas).
-- `test/widget_test.dart`: teste de renderização inicial.
-- `pubspec.yaml`: metadados e dependências do projeto.
+- `lib/main.dart`: app completo.
+- `MANUAL_EXPLICAR_CODIGO.md`: guia para explicar o código.
+- `test/widget_test.dart`: teste básico do shell.
