@@ -41,6 +41,12 @@ Além deste README, foi criado um guia dedicado:
 
 Esse documento traz um roteiro de apresentação, explicação de arquitetura, fluxo de estado e respostas prontas para perguntas comuns.
 
+
+## Solução para tela branca
+
+Se o app abrir com tela branca, rode `flutter clean` e depois `flutter pub get`.
+Nesta versão também foi corrigido um problema de tipagem no cálculo de progresso (`double`) que podia impedir a execução em alguns ambientes.
+
 ## Como executar
 
 ```bash

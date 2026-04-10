@@ -225,7 +225,7 @@ class _HomeShellState extends State<HomeShell> {
   void _registrarSessaoConcluida() {
     setState(() {
       _sequenciaDias += 1;
-      _progressoEstudo = min(100, _progressoEstudo + 5);
+      _progressoEstudo = min<double>(100, _progressoEstudo + 5);
     });
   }
 
